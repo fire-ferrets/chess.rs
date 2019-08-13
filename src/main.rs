@@ -10,12 +10,6 @@ struct Board {
 }
 
 impl Generate for Board {
-    /*
-    fn generate_board(&self) -> String{
-        let mut result: String = "yolbe".to_owned();
-        return result;
-    }
-    */
     fn generate_board(&self) -> String {
         let mut result: String = "".to_owned();
         for row in 0..self.fields.len(){
@@ -38,4 +32,10 @@ fn main() {
     let mut vec: Vec<Vec<i32>> = vec![inner; 4];
     let board = Board{fields: vec};
     println!("{}", board.generate_board());
+    /*
+     * 0,0,0,0
+     * 0,0,0,0
+     * 0,0,0,0
+     * 0,0,0,0
+     */
 }
