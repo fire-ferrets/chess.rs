@@ -1,19 +1,10 @@
-// board.rs
-trait Generate {
-    fn generate_board(&self) -> String;
-}
-
-trait Init {
-    fn init_board(&mut self);
-}
-
 struct Board {
     // holds an integer for every field, defining what piece is
     // on the field at the moment
     fields: Vec<Vec<i32>>
 }
 
-impl Generate for Board {
+impl Board {
     fn generate_board(&self) -> String {
         let mut result: String = "".to_owned();
         for row in 0..self.fields.len(){
@@ -29,9 +20,7 @@ impl Generate for Board {
         }
         return result;
     }
-}
 
-impl Init for Board {
     /*
      * empty: 0
      * pawn:  1
