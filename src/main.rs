@@ -42,10 +42,10 @@ impl Init for Board {
      * king  :6
      */
     fn init_board(&mut self) {
-        let mut first_row: Vec<i32> = vec![2, 3, 4, 5, 6, 4, 3, 2];
-        let mut pawn_row: Vec<i32> = vec![1; 8];
-        let mut empty_row: Vec<i32> = vec![0; 8];
-        let mut first_white_row: Vec<i32> = vec![2, 3, 4, 6, 5, 4, 3, 2];
+        let first_row: Vec<i32> = vec![2, 3, 4, 5, 6, 4, 3, 2];
+        let pawn_row: Vec<i32> = vec![1; 8];
+        let empty_row: Vec<i32> = vec![0; 8];
+        let first_white_row: Vec<i32> = vec![2, 3, 4, 6, 5, 4, 3, 2];
         self.fields = vec![first_row.clone(),
                            pawn_row.clone(),
                            empty_row.clone(),
