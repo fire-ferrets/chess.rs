@@ -1,7 +1,7 @@
 [package]
 name = "chess_rs"
 version = "0.1.0"
-authors = ["whzup <39431903+whzup@users.noreply.github.com>"]
+authors = ["whzup <39431903+whzup@users.noreply.github.com>", "capturethefire <worstmailaddress@gmail.com>"]
 edition = "2018"
 
 [dependencies]
