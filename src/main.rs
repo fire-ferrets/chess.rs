@@ -1,3 +1,14 @@
+mod board;
+
 fn main() {
-    println!("Hello, world!");
+    let mut board = board::Board{fields: vec![]};
+    board.init_board();
+    println!("{}", board.generate_board());
+    return;
+    /*
+     * 0,0,0,0
+     * 0,0,0,0
+     * 0,0,0,0
+     * 0,0,0,0
+     */
 }
