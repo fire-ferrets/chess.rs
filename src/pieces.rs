@@ -1,3 +1,5 @@
+mod board;
+
 pub trait Piece {
     pub fn legit_move(&self, move : tuple) -> bool;
     pub fn possible_moves() -> Vec<tuple>;
