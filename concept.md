@@ -48,6 +48,24 @@ This architecture makes it easy to treat each player separately.
 ### Attributes
 tbd
 
+### Connection API
+Listens for a "Move" of the player whose turn it currently is. A "Move" could
+be defined as a Vector of 2 coordinates, and a coordinate is a Vector `[x, y]`
+with `0 <= x, y <= 7`.  
+Since sending proper datatypes over a socket is usually unnecessarily
+complicated, this will probably be in form of a json stream.  
+Then internally tests whether that move is valid, and if so it does the move on
+its internal board.  
+Finally, sends back a hashmap / dictionary (again, as json) with the success
+status as one field, and the current board (as a "matrix" / vector of vectors)
+in the other field to the client, so the client now knows the current board and
+whether or not it has to perform a different turn again, or now waits for the
+opponents turn.  
+That json data might look something like this:
+```json
+{ status: "valid / invalid",
+  "board": [[0, 0, 0, ... ], [...], ...]}```
+
 ## Client
 ### Traits
 - `SendMove`: Send the current move to the server to update the board
