@@ -63,8 +63,9 @@ whether or not it has to perform a different turn again, or now waits for the
 opponents turn.  
 That json data might look something like this:
 ```json
-{ status: "valid / invalid",
-  "board": [[0, 0, 0, ... ], [...], ...]}```
+{ "status": "valid / invalid",
+  "board": [[0, 0, 0, ... ], [...], ...]}
+```
 
 ## Client
 ### Traits
