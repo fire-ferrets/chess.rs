@@ -4,7 +4,7 @@
  - API to easily write a chess AI
  - TCP connection to play with others
     - Server - Client architecture with two clients connecting?
- - Custom ASCII skins for the figures
+ - Custom ASCII skins for the pieces
 
 # Architecture
 
@@ -40,10 +40,10 @@ This architecture makes it easy to treat each player separately.
 
 # "Classes"
 ## Server
-### Traits
+### Methods
 - `UpdateBoard`: Update the board state with a move
 - `SetBoard`: Return the current board state
-- `SetPossibleMoves`: Return the possible moves for a figure
+- `SetPossibleMoves`: Return the possible moves for a piece
 
 ### Attributes
 tbd
@@ -68,41 +68,71 @@ That json data might look something like this:
 ```
 
 ## Client
-### Traits
+### Methods
 - `SendMove`: Send the current move to the server to update the board
 - `GetBoard`: Get the new board
-- `GetPossibleMoves`: Get the possible moves for a figure
+- `GetPossibleMoves`: Get the possible moves for a piece
 
 ### Attributes
 - `host`: Is this client the host of the server
 
 ## Board
-### Traits
-- `Init`:  Initialize a board
-- `UpdateBoard`: Update the board state with a move
+### Methods
+- `init`: Initialize a board
+    - **Parameters:**
+        - `NONE`
+    - **Return:**
+        - `NONE`
+- `execute_move`: Execute a given move
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `NONE`
+- `serialize_board`: Serialize the board for communication
+    - **Parameters:**
+        - `NONE`
+    - **Return:**
+        - `ser_board :: JSONArray`
 
 ### Attributes
-- `board_state`: The current board
+- `board_state :: Array of Array of Piece`: The current board state
 
-## Figure
-### Traits
-- `Move`: Return the board with the moved figure
-- `PossibleMoves`: Return the possible moves for the figure
+## `Piece`
+There is one `Piece` class for every chess piece. If there is no piece on a
+field, the `EmptyPiece` is used.
+
+### Methods
+- `possible_moves`: Return the possible moves for the piece
+    - **Parameters:**
+        - `NONE`
+    - **Return:**
+        - `moves :: Vec of Tuples of Tuples`
+- `legit_move`: Check if the move is legit
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `legit :: Boolean`
+- `to_json`: Return serialized representation
+    - **Parameters:**
+        - `NONE`
+    - **Return:**
+        - `ser_piece :: JSONString`
 
 ### Attributes
-- `pos`: Position on the board
+- `color :: String`: Color of the piece
+- `board_pointer :: &Board`: Pointer to the current board
 
 ## TUI
-### Traits
+### Methods
 - `ShowBoard`: Print the current board
 - `ShowMoves`: Show the possible moves
-- `ShowFigureNumber`: Show numbers on the figures to choose the figure to play
+- `ShowFigureNumber`: Show numbers on the pieces to choose the piece to play
 
 ### Attributes
-- `size`: Size of the TUI. small: Only letters as figures, normal: ASCII art figures
+- `size`: Size of the TUI. small: Only letters as pieces, normal: ASCII art pieces
 
 ## Data Base
-### Traits
+### Methods
 - `Init`: Initialize the data base
 - `AddMove`: Add a move to the data base
 
