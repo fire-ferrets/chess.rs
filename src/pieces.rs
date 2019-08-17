@@ -102,3 +102,19 @@ impl Piece for Pawn {
     fn possible_moves() -> Vec<tuple> {
     }
 }
+
+pub struct EmptyPiece {
+    pub color: char;
+    pub board_ptr : &Board;
+}
+
+impl Piece for EmptyPiece {
+    pub fn legit_move(&self, move : tuple) -> bool {
+        false
+    }
+
+    fn possible_moves() -> Vec<tuple> {
+        let empty_vec = Vec::new(); // Does this work?????
+        empty_vec
+    }
+}
