@@ -1,7 +1,7 @@
 pub struct Board {
     // holds an integer for every field, defining what piece is
     // on the field at the moment
-    pub fields: Vec<Vec<i32>>
+    pub fields: [[i32; 8]; 8]
 }
 
 impl Board {
@@ -21,7 +21,7 @@ impl Board {
         return result;
     }
 
-    /*
+    /**
      * empty: 0
      * pawn:  1
      * rook:  2
@@ -29,12 +29,12 @@ impl Board {
      * bishop:4
      * queen :5
      * king  :6
-     */
+     **/
     pub fn init_board(&mut self) {
-        let first_row: Vec<i32> = vec![2, 3, 4, 5, 6, 4, 3, 2];
-        let pawn_row: Vec<i32> = vec![1; 8];
-        let empty_row: Vec<i32> = vec![0; 8];
-        self.fields = vec![first_row.clone(),
+        let first_row: [i32; 8] = [2, 3, 4, 5, 6, 4, 3, 2];
+        let pawn_row: [i32; 8] = [1; 8];
+        let empty_row: [i32; 8] = [0; 8];
+        self.fields = [first_row.clone(),
                            pawn_row.clone(),
                            empty_row.clone(),
                            empty_row.clone(),
