@@ -45,3 +45,38 @@ impl Board {
         return;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_board(){
+        Board{fields: vec![]};
+    }
+
+    #[test]
+    fn test_init_board(){
+        let mut board: Board = Board{fields: vec![]};
+        board.init_board();
+        let new_fields: Vec<Vec<i32>> =vec![
+            vec![2,3,4,5,6,4,3,2],
+            vec![1,1,1,1,1,1,1,1],
+            vec![0,0,0,0,0,0,0,0],
+            vec![0,0,0,0,0,0,0,0],
+            vec![0,0,0,0,0,0,0,0],
+            vec![0,0,0,0,0,0,0,0],
+            vec![1,1,1,1,1,1,1,1],
+            vec![2,3,4,5,6,4,3,2]
+        ];
+        assert_eq!(board.fields, new_fields);
+    }
+
+    #[test]
+    fn test_generate_board(){
+        let mut board: Board = Board{fields: vec![]};
+        board.init_board();
+        let new_string = String::from("2,3,4,5,6,4,3,2\n1,1,1,1,1,1,1,1\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n1,1,1,1,1,1,1,1\n2,3,4,5,6,4,3,2");
+        assert_eq!(board.generate_board(), new_string);
+    }
+}
