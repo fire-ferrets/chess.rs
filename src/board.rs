@@ -1,7 +1,7 @@
 pub struct Board {
     // holds an integer for every field, defining what piece is
     // on the field at the moment
-    pub fields: Vec<Vec<i32>>
+    pub fields: [[i32; 8]; 8]
 }
 
 impl Board {
@@ -21,7 +21,7 @@ impl Board {
         return result;
     }
 
-    /*
+    /**
      * empty: 0
      * pawn:  1
      * rook:  2
@@ -29,12 +29,12 @@ impl Board {
      * bishop:4
      * queen :5
      * king  :6
-     */
+     **/
     pub fn init_board(&mut self) {
-        let first_row: Vec<i32> = vec![2, 3, 4, 5, 6, 4, 3, 2];
-        let pawn_row: Vec<i32> = vec![1; 8];
-        let empty_row: Vec<i32> = vec![0; 8];
-        self.fields = vec![first_row.clone(),
+        let first_row: [i32; 8] = [2, 3, 4, 5, 6, 4, 3, 2];
+        let pawn_row: [i32; 8] = [1; 8];
+        let empty_row: [i32; 8] = [0; 8];
+        self.fields = [first_row.clone(),
                            pawn_row.clone(),
                            empty_row.clone(),
                            empty_row.clone(),
@@ -52,29 +52,29 @@ mod tests {
 
     #[test]
     fn test_create_board(){
-        Board{fields: vec![]};
+        Board{fields: [[0; 8]; 8]};
     }
 
     #[test]
     fn test_init_board(){
-        let mut board: Board = Board{fields: vec![]};
+        let mut board: Board = Board{fields: [[0; 8]; 8]};
         board.init_board();
-        let new_fields: Vec<Vec<i32>> =vec![
-            vec![2,3,4,5,6,4,3,2],
-            vec![1,1,1,1,1,1,1,1],
-            vec![0,0,0,0,0,0,0,0],
-            vec![0,0,0,0,0,0,0,0],
-            vec![0,0,0,0,0,0,0,0],
-            vec![0,0,0,0,0,0,0,0],
-            vec![1,1,1,1,1,1,1,1],
-            vec![2,3,4,5,6,4,3,2]
+        let new_fields: [[i32; 8]; 8] =[
+            [2,3,4,5,6,4,3,2],
+            [1,1,1,1,1,1,1,1],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,1,1],
+            [2,3,4,5,6,4,3,2]
         ];
         assert_eq!(board.fields, new_fields);
     }
 
     #[test]
     fn test_generate_board(){
-        let mut board: Board = Board{fields: vec![]};
+        let mut board: Board = Board{fields: [[0; 8]; 8]};
         board.init_board();
         let new_string = String::from("2,3,4,5,6,4,3,2\n1,1,1,1,1,1,1,1\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0\n1,1,1,1,1,1,1,1\n2,3,4,5,6,4,3,2");
         assert_eq!(board.generate_board(), new_string);
