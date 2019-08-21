@@ -38,8 +38,12 @@ The other client spot can be taken by either a TCP connection or a bot which is
 also hosted on the user's computer.
 This architecture makes it easy to treat each player separately.
 
-# "Classes"
-## Server
+# Classes
+## General structures
+
+ - `move`: A tuple of tuples
+
+## `Server`
 ### Methods
 - `UpdateBoard`: Update the board state with a move
 - `SetBoard`: Return the current board state
@@ -67,7 +71,7 @@ That json data might look something like this:
   "board": [[0, 0, 0, ... ], [...], ...]}
 ```
 
-## Client
+## `Client`
 ### Methods
 - `SendMove`: Send the current move to the server to update the board
 - `GetBoard`: Get the new board
@@ -76,7 +80,7 @@ That json data might look something like this:
 ### Attributes
 - `host`: Is this client the host of the server
 
-## Board
+## `Board`
 ### Methods
 - `init`: Initialize a board
     - **Parameters:**
@@ -88,11 +92,11 @@ That json data might look something like this:
         - `move :: Tuple of Tuples`
     - **Return:**
         - `NONE`
-- `serialize_board`: Serialize the board for communication
+- `repr`: Return a string representation of the board. Can be used for the serialization.
     - **Parameters:**
         - `NONE`
     - **Return:**
-        - `ser_board :: JSONArray`
+        - `str_board :: String`
 
 ### Attributes
 - `board_state :: Array of Array of Piece`: The current board state
@@ -111,18 +115,48 @@ field, the `EmptyPiece` is used.
     - **Parameters:**
         - `move :: Tuple of Tuples`
     - **Return:**
-        - `legit :: Boolean`
-- `to_json`: Return serialized representation
+        - `move_code :: i8`
+- `repr`: Return a string representation of the piece. Can be used for the serialization.
     - **Parameters:**
         - `NONE`
     - **Return:**
-        - `ser_piece :: JSONString`
+        - `str_piece :: String`
 
 ### Attributes
 - `color :: String`: Color of the piece
 - `board_pointer :: &Board`: Pointer to the current board
 
-## TUI
+### Move codes
+
+There may be different reasons for the invalidity of the move. We can account
+for this by using integer codes which can generate either an error message or
+can be used by an automated client as information about the move.
+
+#### Invalid move codes
+
+| Code | Meaning                             |
+|------|-------------------------------------|
+| -1   | No valid move for the piece         |
+| -2   | No figure at source position        |
+| -3   | Opponent's piece at source position |
+| -4   | Own figure at end position          |
+| -5   | Other piece blocks the move         |
+| -6   | Source position outside the board   |
+| -7   | End position outside the board      |
+| -8   | Move results in check               |
+| -9   | Move does not resolve check         |
+
+#### Valid move codes
+
+| Code | Meaning        |
+|------|----------------|
+| 0    | Beat a piece   |
+| 1    | Rochade        |
+| 2    | Transform pawn |
+| 3    | Check          |
+| 4    | Checkmate      |
+
+## `TUI`
 ### Methods
 - `ShowBoard`: Print the current board
 - `ShowMoves`: Show the possible moves
@@ -131,7 +165,7 @@ field, the `EmptyPiece` is used.
 ### Attributes
 - `size`: Size of the TUI. small: Only letters as pieces, normal: ASCII art pieces
 
-## Data Base
+## `Data Base`
 ### Methods
 - `Init`: Initialize the data base
 - `AddMove`: Add a move to the data base
@@ -139,22 +173,27 @@ field, the `EmptyPiece` is used.
 ### Attributes
 - `data_base`: The file used as data base
 
+## `Repr` Trait
+
+Implements:
+ - `repr :: None -> String`: Return a string representation.
+
 # Figure Ideas
+
+It may be nice to have some kind of ASCII representation for the figure. But
+this might require a lot of space for an `8x8` board. Thus, it would be nice to
+have the option to switch between a small and normal mode. The small mode would
+then just display the piece code as a single character and the normal mode
+would show the ASCII pieces.
+
 ## Rook
 ```
 #_#_#
-|   |
-++-++
- | |
-_/_\_
+|   |      ###
+++-++  or  \_/
+ | |        I
+_/_\_      ---
 -----
-```
-
-```
-###
-\_/
- I
----
 ```
 
 ## King
