@@ -48,6 +48,11 @@ This architecture makes it easy to treat each player separately.
 - `update_board`: Update the board state with a move
 - `set_board`: Return the current board state
 - `possible_moves`: Return the possible moves for a piece
+- `check_data`: Check if the data is valid
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `valid_code :: i8`
 
 ### Attributes
 tbd
@@ -71,14 +76,14 @@ That json data might look something like this:
   "board": [[0, 0, 0, ... ], [...], ...]}
 ```
 
-### Move codes
+### Codes
 
 There may be different reasons for the invalidity of the move which should be
 communicated to the client. We can account for this by using integer codes which
 can generate either an error message or can be used by an automated client as
 information about the move.
 
-#### Invalid move codes
+#### Error codes
 
 | Code | Method                  | Meaning                             |
 | :-   | :-                      | :-                                  |
@@ -92,7 +97,7 @@ information about the move.
 | -8   | `Board.check_check`     | Move results in check               |
 | -9   | `Server.check_data`     | Invalid data                        |
 
-#### Valid move codes
+#### Non-error codes
 
 | Code | Method                  | Meaning        |
 | :-   | :-                      | :-             |
@@ -108,6 +113,21 @@ information about the move.
         - `NONE`
     - **Return:**
         - `NONE`
+- `check_positions`: Check the positions in the move for their spatial validity
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `valid_code :: i8`
+- `check_check`: Check if the move results in a check
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `valid_code :: i8`
+- `check_transform`: Check if a pawn has reached the transformation line
+    - **Parameters:**
+        - `move :: Tuple of Tuples`
+    - **Return:**
+        - `valid_code :: i8`
 - `execute_move`: Execute a given move
     - **Parameters:**
         - `move :: Tuple of Tuples`
@@ -132,11 +152,11 @@ field, the `EmptyPiece` is used.
         - `NONE`
     - **Return:**
         - `moves :: Vec of Tuples of Tuples`
-- `legit_move`: Check if the move is legit
+- `valid_move`: Check if the move is legit
     - **Parameters:**
         - `move :: Tuple of Tuples`
     - **Return:**
-        - `move_code :: i8`
+        - `valid_code :: i8`
 - `repr`: Return a string representation of the piece. Can be used for the serialization.
     - **Parameters:**
         - `NONE`
