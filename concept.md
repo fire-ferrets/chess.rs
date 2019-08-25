@@ -71,6 +71,36 @@ That json data might look something like this:
   "board": [[0, 0, 0, ... ], [...], ...]}
 ```
 
+### Move codes
+
+There may be different reasons for the invalidity of the move which should be
+communicated to the client. We can account for this by using integer codes which
+can generate either an error message or can be used by an automated client as
+information about the move.
+
+#### Invalid move codes
+
+| Code | Method                  | Meaning                             |
+| :-   | :-                      | :-                                  |
+| -1   | `Piece.valid_move`      | No valid move for the piece         |
+| -2   | `Board.check_positions` | No figure at source position        |
+| -3   | `Board.check_positions` | Opponent's piece at source position |
+| -4   | `Board.check_positions` | Own figure at end position          |
+| -5   | `Board.check_positions` | Source position outside the board   |
+| -6   | `Board.check_positions` | End position outside the board      |
+| -7   | `Piece.check_way`       | Other piece blocks the move         |
+| -8   | `Board.check_check`     | Move results in check               |
+| -9   | `Server.check_data`     | Invalid data                        |
+
+#### Valid move codes
+
+| Code | Method                  | Meaning        |
+| :-   | :-                      | :-             |
+| 0    | `Piece.valid_move`      | Valid move     |
+| 1    | `Board.check_check`     | Check          |
+| 2    | `Board.check_check`     | Checkmate      |
+| 3    | `Board.check_transform` | Transform pawn |
+
 ## `Client`
 ### Methods
 - `SendMove`: Send the current move to the server to update the board
@@ -126,35 +156,6 @@ field, the `EmptyPiece` is used.
 - `color :: String`: Color of the piece
 - `board_pointer :: &Board`: Pointer to the current board
 
-### Move codes
-
-There may be different reasons for the invalidity of the move. We can account
-for this by using integer codes which can generate either an error message or
-can be used by an automated client as information about the move.
-
-#### Invalid move codes
-
-| Code | Meaning                             |
-|------|-------------------------------------|
-| -1   | No valid move for the piece         |
-| -2   | No figure at source position        |
-| -3   | Opponent's piece at source position |
-| -4   | Own figure at end position          |
-| -5   | Other piece blocks the move         |
-| -6   | Source position outside the board   |
-| -7   | End position outside the board      |
-| -8   | Move results in check               |
-| -9   | Move does not resolve check         |
-
-#### Valid move codes
-
-| Code | Meaning        |
-|------|----------------|
-| 0    | Beat a piece   |
-| 1    | Rochade        |
-| 2    | Transform pawn |
-| 3    | Check          |
-| 4    | Checkmate      |
 
 ## `TUI`
 ### Methods
