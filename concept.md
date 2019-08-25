@@ -45,9 +45,9 @@ This architecture makes it easy to treat each player separately.
 
 ## `Server`
 ### Methods
-- `UpdateBoard`: Update the board state with a move
-- `SetBoard`: Return the current board state
-- `SetPossibleMoves`: Return the possible moves for a piece
+- `update_board`: Update the board state with a move
+- `set_board`: Return the current board state
+- `possible_moves`: Return the possible moves for a piece
 
 ### Attributes
 tbd
@@ -101,15 +101,6 @@ information about the move.
 | 2    | `Board.check_check`     | Checkmate      |
 | 3    | `Board.check_transform` | Transform pawn |
 
-## `Client`
-### Methods
-- `SendMove`: Send the current move to the server to update the board
-- `GetBoard`: Get the new board
-- `GetPossibleMoves`: Get the possible moves for a piece
-
-### Attributes
-- `host`: Is this client the host of the server
-
 ## `Board`
 ### Methods
 - `init`: Initialize a board
@@ -155,6 +146,15 @@ field, the `EmptyPiece` is used.
 ### Attributes
 - `color :: String`: Color of the piece
 - `board_pointer :: &Board`: Pointer to the current board
+
+## `Client`
+### Methods
+- `send_move`: Send the current move to the server to update the board
+- `get_board`: Get the new board
+- `get_possible_moves`: Get the possible moves for a piece
+
+### Attributes
+- `host`: Is this client the host of the server
 
 
 ## `TUI`
