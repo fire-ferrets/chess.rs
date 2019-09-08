@@ -1,7 +1,8 @@
 mod board;
 
 pub trait Piece {
-    pub fn legit_move(&self, move : tuple) -> bool;
+    pub fn valid_move(&self, move : tuple) -> i32;
+    pub fn check_way(&self, move : tuple) -> i32;
     pub fn possible_moves() -> Vec<tuple>;
 }
 
@@ -11,29 +12,19 @@ pub struct Rook {
 }
 
 impl Piece for Rook {
-    pub fn legit_move(&self, move : tuple) -> bool {
-        let mut legit = true;
+    pub fn valid_move(&self, move : tuple) -> bool {
+        let mut valid = false;
 
-        let x_src : i32 = move.0.0;
-        let y_src : i32 = move.0.1;
+        let same_x = move.0.0 == move.1.0;
+        let same_y = move.0.1 == move.1.1;
 
-        let x_end : i32 = move.1.0;
-        let y_end : i32 = move.1.1;
-
-        // Check horizontally
-        for i in x_src..x_end {
-            if (*(self.board_ptr))[y_src][i].color != 'e' {
-                legit = false;
-            }
+        if same_x ^ same_y {
+            valid = true;
         }
+        valid
+    }
 
-        // Check veritcally
-        for i in y_src..y_end {
-            if (*(self.board_ptr))[i][x_src].color != 'e' {
-                legit = false;
-            }
-        }
-        legit
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -46,7 +37,19 @@ pub struct Bishop {
 }
 
 impl Piece for Bishop {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
+        let mut valid = false;
+
+        let diff_x = move.0.0 - move.1.0;
+        let diff_y = move.0.1 - move.1.1;
+
+        if diff_x.abs() == diff_y.abs() {
+            valid = true;
+        }
+        valid
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -59,7 +62,10 @@ pub struct Knight {
 }
 
 impl Piece for Knight {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -72,7 +78,10 @@ pub struct Queen {
 }
 
 impl Piece for Queen {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -85,7 +94,10 @@ pub struct King {
 }
 
 impl Piece for King {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -98,7 +110,10 @@ pub struct Pawn {
 }
 
 impl Piece for Pawn {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
@@ -111,8 +126,11 @@ pub struct EmptyPiece {
 }
 
 impl Piece for EmptyPiece {
-    pub fn legit_move(&self, move : tuple) -> bool {
+    pub fn valid_move(&self, move : tuple) -> bool {
         false
+    }
+
+    pub fn check_way(&self, move : tuple) -> i32 {
     }
 
     fn possible_moves() -> Vec<tuple> {
